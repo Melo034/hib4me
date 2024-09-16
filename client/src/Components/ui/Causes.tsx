@@ -21,7 +21,7 @@ const Causes = () => {
   useEffect(() => {
     const fetchCauses = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/donations/all"); // Update with your correct API endpoint
+        const response = await fetch("https://hib4me-server.vercel.app/api/donations/all"); // Update with your correct API endpoint
         if (!response.ok) {
           throw new Error("Failed to fetch causes");
         }
@@ -68,7 +68,7 @@ const Causes = () => {
                 >
                   <div className="w-full h-96 sm:w-1/2">
                     <img
-                      src={`http://localhost:3000${item.image}`} 
+                      src={`https://hib4me-server.vercel.app${item.image}`} 
                       className="object-cover object-center w-full h-full shadow-md rounded-xl"
                       alt={item.name}
                     />
