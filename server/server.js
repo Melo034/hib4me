@@ -22,11 +22,19 @@ app.use((0, cors_1.default)({
 }));
 // Middleware to parse JSON requests
 app.use(express_1.default.json());
-// Connect to MongoDB
-mongoose_1.default.connect(MONGODB_URI).then(() => {
+// Disable buffering
+mongoose_1.default.set('bufferCommands', false);
+// Connect to MongoDB with increased timeouts and error handling
+mongoose_1.default.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 30000, // 30 seconds timeout for server selection
+    connectTimeoutMS: 30000 // 30 seconds timeout for initial connection
+})
+    .then(() => {
     console.log('Connected to MongoDB');
-}).catch((error) => {
+})
+    .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
+    process.exit(1); // Exit the process if the database connection fails
 });
 // Use the routers
 app.use('/api/donations', donation_1.default);
