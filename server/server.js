@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -24,24 +33,31 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json());
 // Disable buffering
 mongoose_1.default.set('bufferCommands', false);
-// Connect to MongoDB with increased timeouts and error handling
-mongoose_1.default.connect(MONGODB_URI, {
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout for server selection
-    connectTimeoutMS: 30000 // 30 seconds timeout for initial connection
-})
-    .then(() => {
-    console.log('Connected to MongoDB');
-})
-    .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1); // Exit the process if the database connection fails
+// Function to connect to MongoDB and start the server
+const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Await the connection to MongoDB
+        yield mongoose_1.default.connect(MONGODB_URI, {
+            serverSelectionTimeoutMS: 30000, // 30 seconds timeout for server selection
+            connectTimeoutMS: 30000 // 30 seconds timeout for initial connection
+        });
+        console.log('Connected to MongoDB');
+        // Use the routers
+        app.use('/api/donations', donation_1.default);
+        app.use('/api/users', user_1.default);
+        app.use('/auth', auth_1.default);
+        app.use("/uploads", express_1.default.static(path_1.default.join(__dirname, "public/uploads")));
+        app.use('/api/blink', blink_1.default);
+        // Start the server
+        app.listen(PORT, () => {
+            console.log(`Server is running on port http://localhost:${PORT}`);
+        });
+    }
+    catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1); // Exit the process if the database connection fails
+    }
 });
-// Use the routers
-app.use('/api/donations', donation_1.default);
-app.use('/api/users', user_1.default);
-app.use('/auth', auth_1.default);
-app.use("/uploads", express_1.default.static(path_1.default.join(__dirname, "public/uploads")));
-app.use('/api/blink', blink_1.default);
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);

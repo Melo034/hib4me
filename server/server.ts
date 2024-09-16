@@ -26,25 +26,33 @@ app.use(express.json());
 // Disable buffering
 mongoose.set('bufferCommands', false);
 
-// Connect to MongoDB with increased timeouts and error handling
-mongoose.connect(MONGODB_URI, {
-    serverSelectionTimeoutMS: 30000,  // 30 seconds timeout for server selection
-    connectTimeoutMS: 30000           // 30 seconds timeout for initial connection
-})
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1);  // Exit the process if the database connection fails
-});
+// Function to connect to MongoDB and start the server
+const startServer = async () => {
+    try {
+        // Await the connection to MongoDB
+        await mongoose.connect(MONGODB_URI, {
+            serverSelectionTimeoutMS: 30000,  // 30 seconds timeout for server selection
+            connectTimeoutMS: 30000           // 30 seconds timeout for initial connection
+        });
+        console.log('Connected to MongoDB');
 
-// Use the routers
-app.use('/api/donations', donationRouter);
-app.use('/api/users', userRouter);
-app.use('/auth', authRouter);
-app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
-app.use('/api/blink', blinksRouter);
+        // Use the routers
+        app.use('/api/donations', donationRouter);
+        app.use('/api/users', userRouter);
+        app.use('/auth', authRouter);
+        app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+        app.use('/api/blink', blinksRouter);
+
+        // Start the server
+        app.listen(PORT, () => {
+            console.log(`Server is running on port http://localhost:${PORT}`);
+        });
+
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1);  // Exit the process if the database connection fails
+    }
+};
 
 // Start the server
 app.listen(PORT, () => {
