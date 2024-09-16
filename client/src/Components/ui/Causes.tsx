@@ -68,7 +68,7 @@ const Causes = () => {
                 >
                   <div className="w-full h-96 sm:w-1/2">
                     <img
-                      src={`https://hib4me-server.vercel.app${item.image}`} 
+                      src={`http://localhost:3000${item.image}`} 
                       className="object-cover object-center w-full h-full shadow-md rounded-xl"
                       alt={item.name}
                     />

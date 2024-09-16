@@ -26,7 +26,7 @@ const Signin = () => {
     setLoading(true);
     try {
       // Replace 'YOUR_API_URL' with the actual API URL from your environment variables
-      const response = await axios.post(`https://hib4me-server.vercel.app/auth/signin`, data);
+      const response = await axios.post(`http://localhost:3000/auth/signin`, data);
       navigate("/add"); // Redirect to the dashboard or any protected route
     } catch (error) {
       // Handle errors, such as invalid credentials

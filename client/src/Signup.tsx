@@ -43,7 +43,7 @@ const Signup = () => {
     try {
       // Replace 'YOUR_API_URL' with the actual API URL from your environment variables
       const response = await axios.post(
-        `https://hib4me-server.vercel.app/auth/signup`,
+        `http://localhost:3000/auth/signup`,
         data
       );
       // Handle successful signup
