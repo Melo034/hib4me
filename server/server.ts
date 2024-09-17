@@ -54,7 +54,5 @@ const startServer = async () => {
     }
 };
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
-});
+// Start the server only after connecting to MongoDB
+startServer();

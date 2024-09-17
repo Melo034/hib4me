@@ -58,7 +58,5 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         process.exit(1); // Exit the process if the database connection fails
     }
 });
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
-});
+// Start the server only after connecting to MongoDB
+startServer();
