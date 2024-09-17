@@ -14,21 +14,13 @@ const MONGODB_URI = process.env.MONGO_URI;
 
 const app = express();
 
+// CORS configuration
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Content-Encoding', 'Accept-Encoding'],
     optionsSuccessStatus: 204
 }));
-
-// Handling OPTIONS requests globally
-app.options('*', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Encoding, Accept-Encoding');
-    res.sendStatus(204);
-});
-app.use('*', cors());
 
 
 // Middleware to parse JSON requests
