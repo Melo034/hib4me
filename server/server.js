@@ -21,6 +21,7 @@ const user_1 = __importDefault(require("./routes/apis/user"));
 const auth_1 = __importDefault(require("./routes/apis/auth"));
 const blink_1 = __importDefault(require("./routes/apis/blink"));
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGO_URI;
 const app = (0, express_1.default)();
@@ -36,6 +37,11 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json());
 // Disable buffering
 mongoose_1.default.set('bufferCommands', false);
+const uploadDir = path_1.default.join(__dirname, "public/uploads");
+if (!fs_1.default.existsSync(uploadDir)) {
+    fs_1.default.mkdirSync(uploadDir, { recursive: true }); // Creates the directory and its parents if needed
+    console.log(`Upload directory created at: ${uploadDir}`);
+}
 // Function to connect to MongoDB and start the server
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -49,7 +55,7 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         app.use('/api/donations', donation_1.default);
         app.use('/api/users', user_1.default);
         app.use('/auth', auth_1.default);
-        app.use("/uploads", express_1.default.static(path_1.default.join(__dirname, "public/uploads")));
+        app.use("/uploads", express_1.default.static(uploadDir));
         app.use('/api/blink', blink_1.default);
         // Start the server
         app.listen(PORT, () => {

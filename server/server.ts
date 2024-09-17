@@ -7,6 +7,7 @@ import userRouter from "./routes/apis/user";
 import authRouter from "./routes/apis/auth";
 import blinksRouter from "./routes/apis/blink"
 import path from 'path';
+import fs from 'fs';
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGO_URI; 
@@ -29,6 +30,12 @@ app.use(express.json());
 // Disable buffering
 mongoose.set('bufferCommands', false);
 
+const uploadDir = path.join(__dirname, "public/uploads");
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true }); // Creates the directory and its parents if needed
+    console.log(`Upload directory created at: ${uploadDir}`);
+}
+
 // Function to connect to MongoDB and start the server
 const startServer = async () => {
     try {
@@ -43,7 +50,7 @@ const startServer = async () => {
         app.use('/api/donations', donationRouter);
         app.use('/api/users', userRouter);
         app.use('/auth', authRouter);
-        app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+        app.use("/uploads", express.static(uploadDir));
         app.use('/api/blink', blinksRouter);
 
         // Start the server
