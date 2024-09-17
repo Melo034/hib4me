@@ -14,9 +14,12 @@ const MONGODB_URI = process.env.MONGO_URI;
 const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin: '*',  // Allow all origins or specify your client domain
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Action-Version', 'X-Blockchain-Ids'],  // Add any custom headers here
+    exposedHeaders: ['X-Action-Version', 'X-Blockchain-Ids'],  // Expose custom headers to clients
+    preflightContinue: true,
+    optionsSuccessStatus: 204
 }));
 
 

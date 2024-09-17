@@ -25,9 +25,12 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGO_URI;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: '*',
+    origin: '*', // Allow all origins or specify your client domain
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Action-Version', 'X-Blockchain-Ids'], // Add any custom headers here
+    exposedHeaders: ['X-Action-Version', 'X-Blockchain-Ids'], // Expose custom headers to clients
+    preflightContinue: true,
+    optionsSuccessStatus: 204
 }));
 // Middleware to parse JSON requests
 app.use(express_1.default.json());
