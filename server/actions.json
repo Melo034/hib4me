@@ -1,12 +1,12 @@
 {
   "rules": [
     {
-      "pathPattern": "/**",
+      "pathPattern": "api/**",
       "apiPath": "/**"
     },
     {
       "pathPattern": "/**",
-      "apiPath": "/**"
+      "apiPath": "api/**"
     }
   ]
 }
