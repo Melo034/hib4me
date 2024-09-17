@@ -35,6 +35,11 @@ if (!fs.existsSync(uploadDir)) {
     console.log(`Upload directory created at: ${uploadDir}`);
 }
 
+// Serve actions.json from the project folder
+app.get('/actions.json', (req, res) => {
+    res.sendFile(path.join(__dirname, 'actions.json'));
+});
+
 // Function to connect to MongoDB and start the server
 const startServer = async () => {
     try {

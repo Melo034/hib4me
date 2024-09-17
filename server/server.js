@@ -41,6 +41,10 @@ if (!fs_1.default.existsSync(uploadDir)) {
     fs_1.default.mkdirSync(uploadDir, { recursive: true }); // Creates the directory and its parents if needed
     console.log(`Upload directory created at: ${uploadDir}`);
 }
+// Serve actions.json from the project folder
+app.get('/actions.json', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, 'actions.json'));
+});
 // Function to connect to MongoDB and start the server
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
