@@ -23,7 +23,7 @@ export async function getBlink(req, res) {
 
   try {
     const donation = await service.getDonationById(id);
-    const imagePath = `/public/uploads/${donation.image}`;
+    const imagePath = `https://hib4me-server.onrender.com/uploads/${donation.image}`;
 
     const payload: ActionGetResponse = {
       icon: `${baseUrl}${imagePath}`,

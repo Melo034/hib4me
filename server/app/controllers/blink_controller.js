@@ -43,7 +43,7 @@ function getBlink(req, res) {
         const baseUrl = `${req.protocol}://${req.get("host")}`;
         try {
             const donation = yield service.getDonationById(id);
-            const imagePath = `/public/uploads/${donation.image}`;
+            const imagePath = `https://hib4me-server.onrender.com/uploads/${donation.image}`;
             const payload = {
                 icon: `${baseUrl}${imagePath}`,
                 label: "Donation",
