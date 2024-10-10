@@ -23,7 +23,7 @@ export async function getBlink(req, res) {
 
   try {
     const donation = await service.getDonationById(id);
-    const imagePath = `https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fblack-patient-in-hospital&psig=AOvVaw0zd3Wo4B2lTCAi2ENj0o4W&ust=1728641828958000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6turKg4kDFQAAAAAdAAAAABAE`;
+    const imagePath = `/public/uploads/${donation.image}`;
 
     const payload: ActionGetResponse = {
       icon: `${baseUrl}${imagePath}`,
