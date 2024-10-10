@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 export const createDonation = async (req, res) => {
   const body = req.body;
   if (req.file) {
-    body.image = `/uploads/${req.file.filename}`;
+    body.image = `../../public/uploads/${req.file.filename}`;
   }
 
   try {

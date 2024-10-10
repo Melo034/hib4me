@@ -56,7 +56,7 @@ const upload = (0, multer_1.default)({ storage: storage });
 const createDonation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     if (req.file) {
-        body.image = `/uploads/${req.file.filename}`;
+        body.image = `../../public/uploads/${req.file.filename}`;
     }
     try {
         const donation = yield service.createDonation(body);
